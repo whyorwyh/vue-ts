@@ -2,9 +2,9 @@
     <div>
     <div>{{remainCount}} item left</div>
     <div>
-      <!-- <span :class="active: checked=== 'all'">All</span> -->
-      <span>Active</span>
-      <span>Completed</span>
+      <span :class="{active: currentView=== 'all'}">All</span>
+      <span :class="{active: currentView=== 'active'}">Active</span>
+      <span :class="{active: currentView=== 'completed'}">Completed</span>
     </div>
     <div>clear completed</div>
     </div>
