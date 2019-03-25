@@ -1,6 +1,6 @@
 <template>
   <li class="todo-li">
-    <Checkbox v-model="isChecked" @on-change="handleChange" size="large">
+    <Checkbox v-model="todo.isCompleted" size="large">
       <span  :class="[{completed: todoObj.isCompleted}, 'todo-name']">{{todoObj.name}}</span>
     </Checkbox>
     <Icon type="md-close" @click="handleRemove"/>
@@ -22,7 +22,6 @@ export default {
   },
   data () {
     return {
-      isChecked: false,
       todoObj: {}
     }
   },
@@ -36,10 +35,6 @@ export default {
     }
   },
   methods: {
-    handleChange () {
-      // this.todo
-      this.$emit('completed')
-    },
     handleRemove () {
       this.$emit('remove')
     }

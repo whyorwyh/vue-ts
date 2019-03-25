@@ -3,10 +3,10 @@
     <Input v-model="todoEvent" placeholder="请输入待办事项" @keyup.enter.native="handleEnter"/>
     <ul  class="todo-list">
       <template v-for="(todo, index) in showTodoList">
-        <todo-item :todo="todo" @completed="handleCompleted(index)" @remove="handleRemove(index)"></todo-item>
+        <todo-item :todo="todo" @remove="handleRemove(index)"></todo-item>
       </template>
     </ul>
-    <todo-footer></todo-footer>
+    <todo-footer :remainCount="remaining.length" :currentView="currentView" @clear-all="handleClearAll"></todo-footer>
   </div>
 </template>
 
@@ -30,22 +30,38 @@ export default {
     return {
       todoEvent: '',
       allTodoList: [],
-      showTodoList: []
+      // showTodoList: []
     }
   },
-  watch: {
-    allTodoList: {
-      handler: function () {
-        this.showTodoList = this.allTodoList
+  computed: {
+    showTodoList () {
+      switch (this.currentView) {
+        case 'active': return this.remaining;
+        case 'completed': return this.completed;
+        case 'all':
+        default:
+          return this.allTodoList;
       }
+    },
+    remaining () {
+      return this.allTodoList.filter(this.isNotCompleted)
+    },
+    completed () {
+      return this.allTodoList.filter(this.isCompleted)
     }
   },
   methods: {
-    handleRemove (index) {
-      this.allTodoList.splice(index, 1)
+    handleClearAll () {
+      this.allTodoList = []
     },
-    handleCompleted (index) {
-      this.allTodoList[index].isCompleted = !this.allTodoList[index].isCompleted
+    isCompleted (item) {
+      return item.isCompleted
+    },
+    isNotCompleted (item) {
+      return !item.isCompleted
+    },
+    handleRemove (index: Number) {
+      this.allTodoList.splice(index, 1)
     },
     handleEnter () {
       if (this.todoEvent === '') {
