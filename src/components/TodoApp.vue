@@ -3,9 +3,9 @@
     <Checkbox v-model="isSelectAll" size="large" @on-change="handleSelectAll"></Checkbox>
     <Input v-model="todoEvent" placeholder="请输入待办事项" @keyup.enter.native="handleEnter"/>
     <ul  class="todo-list">
-      <div v-for="(todo, index) in showTodoList"  :key="index" >
-        <todo-item :todo="todo" @remove="handleRemove(index)"></todo-item>
-      </div>
+      <!-- <div v-for="(todo, index) in showTodoList"  :key="index" > -->
+        <todo-item  v-for="(todo, index) in showTodoList"  :key="index" :todo="todo" @remove="handleRemove(index)"></todo-item>
+      <!-- </div> -->
     </ul>
     <todo-footer :remainCount="remaining.length" :currentView="currentView" @clear-all="handleClearAll"></todo-footer>
   </div>

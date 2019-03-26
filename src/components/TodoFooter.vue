@@ -1,6 +1,6 @@
 <template>
   <div class="todo-footer">
-  <div>{{remainCount}} item left</div>
+  <div>{{remainCount}} {{remainCount | pluralize('item')}} left</div>
   <div>
     <router-link to="/" :class="[{active: !isActive && !isCompleted}, 'filter-item']">All</router-link>
     <router-link to="/active"  :class="[{active: isActive}, 'filter-item']">Active</router-link>
@@ -37,6 +37,9 @@
     },
     created () {
       console.log(this.currentView)
+    },
+    filters: {
+      pluralize: (n, w) => n === 1 ? w : w + 's'
     },
     methods: {
       handleClearAll () {
