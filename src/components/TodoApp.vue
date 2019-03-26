@@ -1,10 +1,11 @@
 <template>
   <div class="todoApp">
+    <Checkbox v-model="isSelectAll" size="large" @on-change="handleSelectAll"></Checkbox>
     <Input v-model="todoEvent" placeholder="请输入待办事项" @keyup.enter.native="handleEnter"/>
     <ul  class="todo-list">
-      <template v-for="(todo, index) in showTodoList">
+      <div v-for="(todo, index) in showTodoList"  :key="index" >
         <todo-item :todo="todo" @remove="handleRemove(index)"></todo-item>
-      </template>
+      </div>
     </ul>
     <todo-footer :remainCount="remaining.length" :currentView="currentView" @clear-all="handleClearAll"></todo-footer>
   </div>
@@ -29,18 +30,20 @@ export default {
   data () {
     return {
       todoEvent: '',
-      allTodoList: [],
-      // showTodoList: []
+      allTodoList: [ { isCompleted: false, name: 'Use Vue with TypeScript' } ],
+      isSelectAll: false
     }
   },
   computed: {
     showTodoList () {
       switch (this.currentView) {
-        case 'active': return this.remaining;
-        case 'completed': return this.completed;
+        case 'completed':
+          return this.completed
+        case 'active':
+          return this.remaining
         case 'all':
         default:
-          return this.allTodoList;
+          return this.allTodoList
       }
     },
     remaining () {
@@ -51,6 +54,13 @@ export default {
     }
   },
   methods: {
+    handleSelectAll () {
+      const stateForAll = this.completed.length !== this.allTodoList.length
+
+      for (const todo of this.allTodoList) {
+        todo.isCompleted = stateForAll
+      }
+    },
     handleClearAll () {
       this.allTodoList = []
     },
@@ -60,7 +70,7 @@ export default {
     isNotCompleted (item) {
       return !item.isCompleted
     },
-    handleRemove (index: Number) {
+    handleRemove (index) {
       this.allTodoList.splice(index, 1)
     },
     handleEnter () {
