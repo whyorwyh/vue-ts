@@ -14,6 +14,7 @@
 <script lang="ts">
 import TodoFooter from './TodoFooter.vue'
 import TodoItem from './TodoItem.vue'
+import {RouteViews, Todo} from '../models'
 // import { Component, Prop, Vue } from 'vue-property-decorator';
 
 export default {
@@ -35,7 +36,7 @@ export default {
     }
   },
   computed: {
-    showTodoList () {
+    showTodoList (): Todo[] {
       switch (this.currentView) {
         case 'completed':
           return this.completed
@@ -46,10 +47,10 @@ export default {
           return this.allTodoList
       }
     },
-    remaining () {
+    remaining (): Todo[] {
       return this.allTodoList.filter(this.isNotCompleted)
     },
-    completed () {
+    completed (): Todo[] {
       return this.allTodoList.filter(this.isCompleted)
     }
   },
@@ -64,13 +65,13 @@ export default {
     handleClearAll () {
       this.allTodoList = []
     },
-    isCompleted (item) {
+    isCompleted (item: Todo) {
       return item.isCompleted
     },
-    isNotCompleted (item) {
+    isNotCompleted (item: Todo) {
       return !item.isCompleted
     },
-    handleRemove (index) {
+    handleRemove (index: number) {
       this.allTodoList.splice(index, 1)
     },
     handleEnter () {

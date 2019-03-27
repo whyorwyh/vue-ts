@@ -1,7 +1,6 @@
 <template>
   <li class="todo-li">
-    <Checkbox v-model="todo.isCompleted" size="large" @on-change="handleChange">
-      <!-- <input  v-model:checked="todo.isCompleted" type="checkbox"/> -->
+    <Checkbox v-model="todo.isCompleted" size="large">
       <span  :class="[{completed: todo.isCompleted}, 'todo-name']">{{todo.name}}</span>
     </Checkbox>
     <Icon type="md-close" @click="handleRemove"/>
@@ -23,31 +22,9 @@ export default {
   },
   data () {
     return {
-      todoObj: {}
     }
   },
-  watch: {
-    todo: {
-      handler (value) {
-        // console.log(value)
-        this.todoObj = { ...value }
-      },
-      deep: true,
-      immediate: true
-    }
-    // todoObj: {
-    //   handler (value) {
-    //     this.$emit('changeIsCompleted')
-    //   }
-    // }
-  },
-
   methods: {
-    handleChange (value) {
-      console.log('handleChange', value)
-      // this.$emit('toggleCompleted')
-      // console.log('handleChange')
-    },
     handleRemove () {
       this.$emit('remove')
     }
@@ -56,7 +33,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-
 .todo {
   &-li {
     display: flex;

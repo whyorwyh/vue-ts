@@ -27,22 +27,19 @@
       return {
       }
     },
-     computed: {
+    computed: {
       isActive(): boolean {
-        return this.currentView === 'active';
+          return this.currentView === 'active'
       },
       isCompleted(): boolean {
         return this.currentView === 'completed';
       }
     },
-    created () {
-      console.log(this.currentView)
-    },
     filters: {
-      pluralize: (n, w) => n === 1 ? w : w + 's'
+      pluralize: (n: number, w: string): string => n === 1 ? w : w + 's'
     },
     methods: {
-      handleClearAll () {
+      handleClearAll (): void {
         this.$emit('clear-all')
       }
     }
