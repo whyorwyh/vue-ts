@@ -9,26 +9,31 @@
 
 <script lang="ts">
 // import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 
-export default {
-  name: 'TodoItem',
-  props: {
-    currentView: {
-      type: String
-    },
-    todo: {
-      type: Object
-    }
-  },
-  data () {
-    return {
-    }
-  },
-  methods: {
-    handleRemove () {
-      this.$emit('remove')
-    }
-  }
+@Component({
+
+})
+export default class TodoItem extends Vue {
+  // name: 'TodoItem',
+  @Prop(String) currentView!: string;
+  @Prop(Object) todo!: object;
+  // props: {
+  //   currentView: {
+  //     type: String
+  //   },
+  //   todo: {
+  //     type: Object
+  //   }
+  // },
+
+  @Emit('remove')
+  handleRemove () {}
+  // methods: {
+  //   handleRemove () {
+  //     this.$emit('remove')
+  //   }
+  // }
 }
 </script>
 

@@ -10,57 +10,72 @@
   </div>
 </template>
   
-  <script lang="ts">
-  // import { Component, Prop, Vue } from 'vue-property-decorator';
-  
-  export default {
-    name: 'TodoFooter',
-    props: {
-      currentView: {
-        type: String
-      },
-      remainCount: {
-        type: Number
-      }
-    },
-    data () {
-      return {
-      }
-    },
-    computed: {
-      isActive(): boolean {
-          return this.currentView === 'active'
-      },
-      isCompleted(): boolean {
-        return this.currentView === 'completed';
-      }
-    },
-    filters: {
-      pluralize: (n: number, w: string): string => n === 1 ? w : w + 's'
-    },
-    methods: {
-      handleClearAll (): void {
-        this.$emit('clear-all')
-      }
-    }
+<script lang="ts">
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
+
+// import Componet from 'vue-class-component';
+@Component({
+  filters: {
+    pluralize: (n: number, w: string): string => n === 0 || n === 1 ? w : w + 's'
   }
-  </script>
-  
-  <style scoped lang="less">
-  .todo-footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    .filter-item {
-      padding: 0px 5px;
-      margin-right: 5px;
-    }
+})
+export default class TodoFooter extends Vue {
+  // name: 'TodoFooter',
+  @Prop(String) currentView!: string;
+
+  @Prop(Number) remainCount!: number;
+  // props: {
+  //   currentView: {
+  //     type: String
+  //   },
+  //   remainCount: {
+  //     type: Number
+  //   }
+  // },
+  get isActive() {
+    return this.currentView === 'active'
   }
-  .active {
-    border: 1px solid #cccccc;
-    border-radius: 5px;
- 
+  get isCompleted () {
+    return this.currentView === 'completed'
   }
-  
-  </style>
+  // computed: {
+  //   isActive(): boolean {
+  //     return this.currentView === 'active'
+  //   },
+  //   isCompleted(): boolean {
+  //     return this.currentView === "completed";
+  //   }
+  // },
+  // filters: {
+  //   pluralize: (n: number, w: string): string => n === 1 ? w : w + 's'
+  // }
+  @Emit('clear-all')
+  handleClearAll () {
+    // this.$emit('clear-all')
+  }
+  // methods: {
+  //   handleClearAll (): void {
+  //     this.$emit('clear-all')
+  //   }
+  // }
+}
+</script>
+
+<style scoped lang="less">
+.todo-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  .filter-item {
+    padding: 0px 5px;
+    margin-right: 5px;
+  }
+}
+.active {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+
+}
+
+</style>
   

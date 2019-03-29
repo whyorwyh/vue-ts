@@ -13,5 +13,5 @@ const routes = viewNames.map((view): RouteConfig => ({
 }));
 
 export default new Router({
-  routes: routes
+  routes
 });
